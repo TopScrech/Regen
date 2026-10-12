@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "regen",
+  "version": "${version}",
+  "name": "Regen",
+  "description": "Reset a world with a random or custom seed using /regen",
+  "authors": ["Screch"],
+  "environment": "*",
+  "entrypoints": { "main": ["dev.screch.regen.RegenMod"] },
+  "mixins": ["regen.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
