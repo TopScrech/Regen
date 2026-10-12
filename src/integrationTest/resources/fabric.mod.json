@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "regen_integration_test",
+  "version": "1.0.0",
+  "name": "Regen integration tests",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.screch.regen.LiveRegenerationTest"],
+    "client": ["dev.screch.regen.SingleplayerRegenerationTest"]
+  },
+  "depends": { "regen": "*" }
+}

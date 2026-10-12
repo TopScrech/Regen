@@ -1,6 +1,7 @@
 .gradle/
 build/
 run/
+logs/
 .idea/
 *.iml
 .DS_Store

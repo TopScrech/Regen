@@ -41,3 +41,55 @@ test {
 tasks.named('runServer') {
     standardInput = System.in
 }
+
+if (providers.gradleProperty('regenIntegrationTest').isPresent()) {
+    sourceSets {
+        integrationTest {
+            compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+            runtimeClasspath += output + compileClasspath
+        }
+    }
+    loom {
+        runs {
+            server { runDir 'build/integration-server' }
+            client {
+                runDir 'build/integration-client'
+                programArg '--quickPlaySingleplayer'
+                programArg 'regen-client-test'
+            }
+        }
+        mods {
+            regen { sourceSet sourceSets.main }
+            regen_integration_test { sourceSet sourceSets.integrationTest }
+        }
+    }
+    tasks.named('runServer') {
+        dependsOn tasks.named('integrationTestClasses')
+        classpath += sourceSets.integrationTest.runtimeClasspath
+        doFirst {
+            def testDirectory = file('build/integration-server')
+            delete testDirectory
+            testDirectory.mkdirs()
+            new File(testDirectory, 'eula.txt').text = 'eula=true\n'
+            new File(testDirectory, 'server.properties').text = 'online-mode=false\nserver-ip=127.0.0.1\nserver-port=0\nlevel-name=regen-integration-world\nlevel-seed=77\nview-distance=2\nsimulation-distance=2\nspawn-protection=0\n'
+        }
+    }
+    tasks.named('runClient') {
+        dependsOn tasks.named('integrationTestClasses')
+        classpath += sourceSets.integrationTest.runtimeClasspath
+        doFirst {
+            def savedWorld = file('build/integration-server/regen-integration-world')
+            if (!savedWorld.isDirectory()) {
+                throw new GradleException('Run the server integration test before the client integration test')
+            }
+            def testDirectory = file('build/integration-client')
+            delete testDirectory
+            copy {
+                from savedWorld
+                exclude 'session.lock'
+                into new File(testDirectory, 'saves/regen-client-test')
+            }
+            new File(testDirectory, 'options.txt').text = 'pauseOnLostFocus:false\nrenderDistance:2\nsimulationDistance:2\nmaxFps:30\ntutorialStep:none\n'
+        }
+    }
+}
