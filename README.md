@@ -1,12 +1,14 @@
 # Regen
 
-Fabric mod for Minecraft **26.2**, for dedicated servers and singleplayer
+Fabric mod written in Kotlin for Minecraft **26.2**, for dedicated servers and singleplayer
 
 ## Install
 
 Use Java 25 or newer, Fabric Loader 0.19.5 or newer, and Fabric API for Minecraft 26.2
 
-Place `regen-1.1.0.jar` in `mods` on the dedicated server, or in your Minecraft instance for singleplayer
+The Kotlin standard library is bundled in the JAR
+
+Place `regen-1.0.jar` in `mods` on the dedicated server, or in your Minecraft instance for singleplayer
 
 ## Commands
 
@@ -44,7 +46,7 @@ If an I/O or world-generation error prevents a rebuild after the old worlds have
 ./gradlew build
 ```
 
-The installable JAR is `build/libs/regen-1.1.0.jar`
+The installable JAR is `build/libs/regen-1.0.jar`
 Tests use temporary worlds to verify seed parsing, player and dimension deletion, retained settings, duplicate requests, corrupt requests, and symbolic link handling
 
 Run the live server test, then the singleplayer client test:

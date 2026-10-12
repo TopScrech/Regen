@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "regen_integration_test",
-  "version": "1.0.0",
+  "version": "1.0",
   "name": "Regen integration tests",
   "environment": "*",
   "entrypoints": {
